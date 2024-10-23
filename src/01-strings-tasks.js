@@ -227,20 +227,20 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-  const rot13Map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-  let encoded = '';
-
-  for (let i = 0; i < str.length; i += 1) {
-    const charIndex = rot13Map.indexOf(str[i]);
-
-    if (charIndex !== -1) {
-      encoded += rot13Map[(charIndex + 13) % 52];
-    } else {
-      encoded += str[i];
+  const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const lowercase = 'abcdefghijklmnopqrstuvwxyz';
+  return str.split('').map((char) => {
+    const index = uppercase.indexOf(char);
+    if (index !== -1) {
+      return uppercase[(index + 13) % 26];
     }
-  }
+    const lowerIndex = lowercase.indexOf(char);
+    if (lowerIndex !== -1) {
+      return lowercase[(lowerIndex + 13) % 26];
+    }
 
-  return encoded;
+    return char;
+  }).join('');
 }
 
 /**
